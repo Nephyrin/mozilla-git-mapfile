@@ -62,6 +62,7 @@ if [ "$oldrev" != "$newrev" ] || [ ! -z "$force" ]; then
     echo ":: Updating $oldrev -> $newrev"
     changes=1
     bookmarkfile=".hg/bookmarks-$branch"
+    bookmarkfile="${bookmarkfile//\//_}"
     # Bookmark tip (and blow-away bookmark file)
     echo "$(hg identify -r default $branch) $branch" > "$bookmarkfile"
     echo "$new_branches" >> "$bookmarkfile"
