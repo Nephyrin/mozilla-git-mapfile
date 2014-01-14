@@ -66,7 +66,6 @@ if [ "$oldrev" != "$newrev" ] || [ ! -z "$force" ]; then
     echo "$(hg identify -r default $branch) $branch" > "$bookmarkfile"
     echo "$new_branches" >> "$bookmarkfile"
     cat .hg/bookmarks-* > .hg/bookmarks
-    hg bookmarks
     hg gexport -v || recover
 fi
 
