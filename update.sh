@@ -63,7 +63,13 @@ if [ "$oldrev" != "$newrev" ] || [ ! -z "$force" ]; then
     changes=1
     bookmarkfile=".hg/bookmarks-${branch//\//_}"
     # Bookmark tip (and blow-away bookmark file)
-    echo "$(hg identify -r default $branch) $branch" > "$bookmarkfile"
+    tiprev="$(hg identify -r default $branch)"
+    if [ -z "$tiprev" ]; then
+      # Apparently this can randomly return the empty string!
+      echo "!! Failed to identify tip of branch??"
+      recover
+    fi
+    echo "$tiprev $branch" > "$bookmarkfile"
     echo "$new_branches" >> "$bookmarkfile"
     cat .hg/bookmarks-* > .hg/bookmarks
     echo ":: $(wc -l "$bookmarkfile") branches in $branch"
